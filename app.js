@@ -84,7 +84,7 @@ function agregarTarea() {
     let rangoBarra = document.createElement('input');
     rangoBarra.type = 'range';
     rangoBarra.min = '0'; 
-    rangoBarra.max = '10'; 
+    rangoBarra.max = '100'; 
     rangoBarra.value = '0'; 
     rangoBarra.style.flex = '1';
     rangoBarra.style.cursor = 'pointer';
