@@ -10,6 +10,24 @@ const boton = document.querySelector('button');
 //Ubicamos el contenedor donde se van a ir listando todas las tareas creadas
 const listaDeTareas = document.getElementById('lista-de-tareas');
 
+// reloj 
+const reloj = document.createElement('div');
+reloj.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px 15px;';
+document.body.appendChild(reloj);
+setInterval(() => reloj.innerText = `${new Date().toLocaleTimeString()}`, 1000);
+
+// Creamos y agregamos el elemento visual del contador de tareas
+const contadorTareas = document.createElement('div');
+contadorTareas.style.cssText = 'font-weight: bold; margin-bottom: 10px; font-size: 20px;';
+contadorTareas.innerText = 'Total de tareas que tienes: 0';
+listaDeTareas.parentNode.insertBefore(contadorTareas, listaDeTareas);
+
+//Función que cuenta cuántas tareas hay en pantalla y actualiza el texto
+function actualizarContador() {
+  const total = document.querySelectorAll('.tarea').length;
+  contadorTareas.innerText = `Total de tareas que tienes: ${total}`;
+}
+
 // el chismoso para que al darle click agrega tarea
 boton.addEventListener('click', agregarTarea);
 
@@ -17,7 +35,7 @@ boton.addEventListener('click', agregarTarea);
 [inputResponsable, inputTarea].forEach(input => {
   if (input) {
     input.addEventListener('keydown', (e) => {
-      // Si la tecla presionada es enter ambién disparamos la función egarTarea
+      // Si la tecla presionada es enter también disparamos la función
       if (e.key === 'Enter') {
         agregarTarea();
       }
@@ -54,7 +72,7 @@ function agregarTarea() {
     // Creamos otro contenedor div para barra 
     let contenedorProgreso = document.createElement('div');
     
-    //  Le asignamos la clase CSS correspondiente barra-contenedor
+    // Le asignamos la clase CSS correspondiente barra-contenedor
     contenedorProgreso.classList.add('barra-contenedor');
     
     // Aplicamos estilos 
@@ -71,15 +89,14 @@ function agregarTarea() {
     rangoBarra.style.flex = '1';
     rangoBarra.style.cursor = 'pointer';
 
-    
     let spanPorcentaje = document.createElement('span');
     spanPorcentaje.innerText = '0%';
     spanPorcentaje.style.minWidth = '45px';
     spanPorcentaje.style.fontWeight = 'bold';
 
-    //  Escuchamos el movimiento del mause
+    // Escuchamos el movimiento del mouse
     rangoBarra.addEventListener('input', (e) => {
-      //Capturamos el valor numérico
+      // Capturamos el valor numérico
       const valor = e.target.value;
       // Actualizamos el texto del span concatenándole el símbolo %
       spanPorcentaje.innerText = valor + '%';
@@ -91,46 +108,51 @@ function agregarTarea() {
     // Añadimos el contenedor de la barra a la tarjeta principal de la tarea
     tareaNueva.appendChild(contenedorProgreso);
 
-    // Creamos un contenedor div para agrupar los botones o iconos de acción[
+    // Creamos un contenedor div para agrupar los botones o iconos de acción
     let iconosDiv = document.createElement('div');
     iconosDiv.style.display = 'flex';
     iconosDiv.style.alignItems = 'center';
 
-    //  Creamos el icono de completar tarea (el chulo verde de Bootstrap Icons)[cite: 1]
+    // Creamos el icono de completar tarea el chulo verde de Bootstrap Icons
     let completar = document.createElement('i');
     completar.classList.add('bi', 'bi-check-circle-fill', 'icono-completar');
     
-    // Escuchamos el clic sobre el icono verde[cite: 1]
+    // Escuchamos el clic sobre el icono verde
     completar.addEventListener('click', () => {
-      // Activa o desactiva la clase CSS '.completada' en la tarea para ponerla negra y tachada[cite: 1]
+      // Activa o desactiva la clase CSS '.completada' en la tarea para ponerla negra y tachada
       tareaNueva.classList.toggle('completada');
     });
 
-    // 31. Creamos el icono de eliminar tarea (la papelera roja de Bootstrap Icons)
+    // Creamos el icono de eliminar tarea la papelera roja de Bootstrap Icons
     let eliminar = document.createElement('i');
     eliminar.classList.add('bi', 'bi-trash3-fill', 'icono-eliminar');
     
-    // 32. Escuchamos el clic sobre la papelera para borrar la tarjeta entera
+    // Escuchamos el clic sobre la papelera para borrar la tarjeta entera
     eliminar.addEventListener('click', () => {
       tareaNueva.remove();
+      // Actualizamos el contador restando al borrar la tarea
+      actualizarContador();
     });
 
-    // 33. Agrupamos ambos iconos dentro de su contenedor de iconos
+    // Agrupamos ambos iconos dentro de su contenedor de iconos
     iconosDiv.append(completar, eliminar);
     
-    // 34. Añadimos el bloque de iconos a la tarjeta principal de la tarea
+    // Añadimos el bloque de iconos a la tarjeta principal de la tarea
     tareaNueva.appendChild(iconosDiv);
 
-    // 35. Insertamos la tarjeta completa con todos sus elementos dentro de la lista general en el HTML
+    // Insertamos la tarjeta completa con todos sus elementos dentro de la lista general en el HTML
     listaDeTareas.appendChild(tareaNueva);
 
-    // 36. Limpiamos el contenido del input de la tarea para dejarlo listo para la siguiente
+    // Actualizamos el contador sumando al crear la tarea
+    actualizarContador();
+
+    // Limpiamos el contenido del input de la tarea para dejarlo listo para la siguiente
     if (inputTarea) inputTarea.value = '';
     
-    // 37. Limpiamos también el input del responsable
+    // Limpiamos también el input del responsable
     if (inputResponsable) inputResponsable.value = '';
     
-    // 38. Devolvemos el foco (el cursor parpadeando) al input del responsable para mayor comodidad
+    // Devolvemos el foco (el cursor parpadeando) al input del responsable para mayor comodidad
     if (inputResponsable) inputResponsable.focus();
     
   } else {
