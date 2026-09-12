@@ -12,13 +12,13 @@ const listaDeTareas = document.getElementById('lista-de-tareas');
 
 // reloj 
 const reloj = document.createElement('div');
-reloj.style.cssText = 'position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.8); color: white; padding: 10px 15px;';
+reloj.className = 'reloj-flotante';
 document.body.appendChild(reloj);
 setInterval(() => reloj.innerText = `${new Date().toLocaleTimeString()}`, 1000);
 
 // Creamos y agregamos el elemento visual del contador de tareas
 const contadorTareas = document.createElement('div');
-contadorTareas.style.cssText = 'font-weight: bold; margin-bottom: 10px; font-size: 20px;';
+contadorTareas.className = 'contador-tareas';
 contadorTareas.innerText = 'Total de tareas que tienes: 0';
 listaDeTareas.parentNode.insertBefore(contadorTareas, listaDeTareas);
 
@@ -74,11 +74,6 @@ function agregarTarea() {
     
     // Le asignamos la clase CSS correspondiente barra-contenedor
     contenedorProgreso.classList.add('barra-contenedor');
-    
-    // Aplicamos estilos 
-    contenedorProgreso.style.display = 'flex';
-    contenedorProgreso.style.alignItems = 'center';
-    contenedorProgreso.style.gap = '10px';
 
     // Creamos un elemento <input> de tipo 'range' un slider o barrita deslizable
     let rangoBarra = document.createElement('input');
@@ -86,13 +81,11 @@ function agregarTarea() {
     rangoBarra.min = '0'; 
     rangoBarra.max = '100'; 
     rangoBarra.value = '0'; 
-    rangoBarra.style.flex = '1';
-    rangoBarra.style.cursor = 'pointer';
+    rangoBarra.classList.add('rango-barra');
 
     let spanPorcentaje = document.createElement('span');
     spanPorcentaje.innerText = '0%';
-    spanPorcentaje.style.minWidth = '45px';
-    spanPorcentaje.style.fontWeight = 'bold';
+    spanPorcentaje.classList.add('span-porcentaje');
 
     // Escuchamos el movimiento del mouse
     rangoBarra.addEventListener('input', (e) => {
@@ -110,8 +103,6 @@ function agregarTarea() {
 
     // Creamos un contenedor div para agrupar los botones o iconos de acción
     let iconosDiv = document.createElement('div');
-    iconosDiv.style.display = 'flex';
-    iconosDiv.style.alignItems = 'center';
 
     // Creamos el icono de completar tarea el chulo verde de Bootstrap Icons
     let completar = document.createElement('i');
@@ -119,7 +110,7 @@ function agregarTarea() {
     
     // Escuchamos el clic sobre el icono verde
     completar.addEventListener('click', () => {
-      // Activa o desactiva la clase CSS '.completada' en la tarea para ponerla negra y tachada
+      // Activa o desactiva la clase CSS '.completada' en la tarea
       tareaNueva.classList.toggle('completada');
     });
 

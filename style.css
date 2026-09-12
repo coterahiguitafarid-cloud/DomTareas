@@ -133,3 +133,34 @@ i {
 .icono-eliminar:hover {
   background-color: rgba(255, 255, 255, 0.523);
 }
+
+/* Estilos extraídos del JS para integrar con tu CSS */
+
+.reloj-flotante {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 15px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.contador-tareas {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #333;
+}
+
+.rango-barra {
+  flex: 1;
+  cursor: pointer;
+}
+
+.span-porcentaje {
+  min-width: 45px;
+  font-weight: bold;
+}
